@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ["php82", "composer", "nodejs"]
+
+[variables]
+PHP_VERSION = "8.2"
+
+[start]
+cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
