@@ -1,8 +1,13 @@
 [phases.setup]
-nixPkgs = ["php82", "composer", "nodejs"]
+# add any extra packages if needed
 
-[variables]
-PHP_VERSION = "8.2"
+[phases.build]
+commands = [
+  "composer install --no-interaction --prefer-dist --optimize-autoloader",
+  "php artisan key:generate --ansi || true",
+  "php artisan storage:link || true",
+  "if [ -f package.json ]; then npm ci --silent && npm run production || true; fi"
+]
 
-[start]
-cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
+[phases.start]
+command = "bash start.sh"
